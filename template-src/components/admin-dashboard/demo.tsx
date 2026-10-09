@@ -15,11 +15,43 @@ type Row = {
 
 const STATUSES = ["Pending", "In Review", "Resolved", "Rejected"]
 
+type Detail = {
+  title: string
+  description: string
+  category: string
+  priority: string
+  status: string
+  location: string | null
+  incident_date: string | null
+  anonymous: number
+  full_name: string
+  department: string | null
+  created_at: string
+  admin_remark: string | null
+  images: { image_path: string }[]
+}
+
 export default function Demo() {
   const [stats, setStats] = React.useState<{ total: number; pending: number; review: number; resolved: number; high: number; anon: number } | null>(null)
   const [rows, setRows] = React.useState<Row[]>([])
   const [q, setQ] = React.useState("")
   const [denied, setDenied] = React.useState(false)
+  const [openId, setOpenId] = React.useState<string | null>(null)
+  const [details, setDetails] = React.useState<Record<string, Detail>>({})
+
+  const toggle = async (id: string) => {
+    if (openId === id) {
+      setOpenId(null)
+      return
+    }
+    setOpenId(id)
+    if (!details[id]) {
+      try {
+        const c = await cvApi("/api/complaints/" + id)
+        setDetails((d) => ({ ...d, [id]: c as Detail }))
+      } catch {}
+    }
+  }
 
   const load = React.useCallback(async () => {
     try {
@@ -92,8 +124,9 @@ export default function Demo() {
             </thead>
             <tbody>
               {shown.map((r) => (
-                <tr key={r.complaint_id}>
-                  <td className="cv-mono">{r.complaint_id}</td>
+                <React.Fragment key={r.complaint_id}>
+                <tr>
+                  <td><button type="button" className="cv-mono" onClick={() => toggle(r.complaint_id)} aria-expanded={openId === r.complaint_id} style={{ background: "none", border: 0, color: "#8c95ff", cursor: "pointer", font: "inherit", padding: 0, textDecoration: "underline" }}>{r.complaint_id}</button></td>
                   <td>{r.student_name}</td>
                   <td>{r.category}</td>
                   <td>{r.priority}</td>
@@ -107,6 +140,36 @@ export default function Demo() {
                     </select>
                   </td>
                 </tr>
+                {openId === r.complaint_id && (
+                  <tr>
+                    <td colSpan={6} style={{ background: "rgba(140,149,255,.05)" }}>
+                      {!details[r.complaint_id] && <span className="cv-mono">Loading…</span>}
+                      {details[r.complaint_id] && (() => { const c = details[r.complaint_id]; return (
+                        <div>
+                          <div style={{ fontWeight: 800, fontSize: "1.05rem" }}>{c.title}</div>
+                          <p style={{ margin: "8px 0", whiteSpace: "pre-wrap" }}>{c.description}</p>
+                          <div className="cv-mono">
+                            Filed by {c.full_name}{c.department && !c.anonymous ? " · " + c.department : ""} · {new Date(c.created_at).toLocaleString()}
+                          </div>
+                          <div className="cv-mono" style={{ marginTop: 4 }}>
+                            {c.category} · {c.location ?? "—"} · {c.incident_date ? c.incident_date.slice(0, 10) : "no date"} · {c.anonymous ? "anonymous" : "named"}
+                          </div>
+                          <div style={{ marginTop: 8 }}><b>Admin remark: </b>{c.admin_remark || "—"}</div>
+                          {c.images.length > 0 && (
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+                              {c.images.map((x, i) => (
+                                /\.pdf$/i.test(x.image_path)
+                                  ? <a key={i} className="cv-ghost" style={{ padding: "6px 16px" }} href={x.image_path} target="_blank" rel="noreferrer">PDF {i + 1}</a>
+                                  : <a key={i} href={x.image_path} target="_blank" rel="noreferrer"><img src={x.image_path} alt="" style={{ width: 110, borderRadius: 10, cursor: "zoom-in" }} /></a>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) })()}
+                    </td>
+                  </tr>
+                )}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
