@@ -1,0 +1,1 @@
+import{j as t}from"./index-CdiR0C0d.js";import{T as o}from"./ticket-stub-footer-B7C5t0bS.js";function s(){return t.jsx("div",{className:"w-full bg-[#1b1a19]",children:t.jsx(o,{})})}export{s as default};

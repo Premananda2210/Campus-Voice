@@ -1,0 +1,1 @@
+import{j as r}from"./index-CdiR0C0d.js";import{I as s}from"./ink-orbit-testimonials-DcLOmJU9.js";function i(){return r.jsx("div",{className:"w-full",children:r.jsx(s,{theme:"dark"})})}export{i as default};

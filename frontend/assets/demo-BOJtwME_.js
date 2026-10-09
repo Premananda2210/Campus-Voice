@@ -1,0 +1,1 @@
+import{j as r}from"./index-CdiR0C0d.js";import{I as e}from"./ink-orbit-sculpture-CNjSaWDd.js";function a(){return r.jsx("div",{className:"relative w-full",children:r.jsx(e,{theme:"dark"})})}export{a as default};

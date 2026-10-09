@@ -1,0 +1,1 @@
+import{j as o}from"./index-CdiR0C0d.js";import{S as i}from"./sealed-invite-waitlist-DZmwanrG.js";async function n(e){if(await new Promise(t=>setTimeout(t,900)),e.startsWith("taken@"))throw new Error("That address is already on the list.");let r=0;for(let t=0;t<e.length;t++)r=r*31+e.charCodeAt(t)>>>0;return 120+r%880}function u(){return o.jsx(i,{onSubmit:n})}export{u as default};

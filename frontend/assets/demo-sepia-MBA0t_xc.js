@@ -1,0 +1,1 @@
+import{j as e}from"./index-CdiR0C0d.js";import{S as t}from"./stardust-stage-preloader-C9PBlY7O.js";function i(){return e.jsx(t,{loop:!0,word:"Selene",caption:"A moon in three movements",acts:["Tuning the telescope","Finding the moon","Dimming the house lights"],palette:{stage:"#120d08",ink:"#f1dfc0",dim:"#9a8467"},density:.8,rain:!1,durationMs:4200})}export{i as default};

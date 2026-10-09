@@ -1,0 +1,1 @@
+import{j as e}from"./index-CdiR0C0d.js";import{M as r}from"./magic-hour-153YpQ_x.js";function a(){return e.jsxs("div",{className:"mx-auto w-full max-w-3xl p-6",children:[e.jsx("p",{className:"pb-4 text-xs uppercase tracking-[0.28em] text-foreground/40",children:"Study 04 — a night in three screens"}),e.jsx(r,{readouts:!1,hint:"",pages:3,height:"36rem"})]})}export{a as default};

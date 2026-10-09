@@ -1,0 +1,1 @@
+import{j as e}from"./index-CdiR0C0d.js";import{N as o}from"./neon-katakana-preloader-B_jN0bkz.js";function t(){return e.jsx(o,{loop:!0,word:"ネオン",label:"neon",caption:"online",kicker:"ネオン / sector 7",density:1.4,palette:{glow:"#ff3df2",core:"#ffe1fb",accent:"#3dffb0",haze:"#2a0a5c",background:"#06030a"}})}export{t as default};

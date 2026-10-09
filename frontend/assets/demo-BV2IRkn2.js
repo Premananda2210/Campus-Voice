@@ -1,0 +1,1 @@
+import{j as e}from"./index-CdiR0C0d.js";import{V as t}from"./vault-dial-reveal-D7DRRxGB.js";function o(){return e.jsx("div",{className:"w-full",children:e.jsx(t,{code:[12,30,7],tone:"graphite",metal:"silver",symbol:"Ξ"})})}export{o as default};

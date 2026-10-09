@@ -1,0 +1,9 @@
+-- Run inside the campus_voice database:  psql -U postgres -d campus_voice -f database/campus_voice.sql
+CREATE TABLE IF NOT EXISTS students(id SERIAL PRIMARY KEY, student_id VARCHAR(30) UNIQUE NOT NULL, full_name VARCHAR(100) NOT NULL, department VARCHAR(80), semester INT, email VARCHAR(120) UNIQUE NOT NULL, phone VARCHAR(20), password_hash VARCHAR(100) NOT NULL, profile_image VARCHAR(200), disabled SMALLINT DEFAULT 0, created_at TIMESTAMP DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS admins(id SERIAL PRIMARY KEY, email VARCHAR(120) UNIQUE NOT NULL, password_hash VARCHAR(100) NOT NULL, role VARCHAR(30) DEFAULT 'admin', created_at TIMESTAMP DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS complaints(id SERIAL PRIMARY KEY, complaint_id VARCHAR(20) UNIQUE, student_id INT NOT NULL REFERENCES students(id) ON DELETE CASCADE, title VARCHAR(150) NOT NULL, description TEXT NOT NULL, category VARCHAR(40), priority VARCHAR(10) DEFAULT 'Medium' CHECK(priority IN('Low','Medium','High','Urgent')), location VARCHAR(40), incident_date DATE, anonymous SMALLINT DEFAULT 0, status VARCHAR(12) DEFAULT 'Pending' CHECK(status IN('Pending','In Review','Resolved','Rejected')), admin_remark TEXT, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP DEFAULT NOW());
+CREATE INDEX IF NOT EXISTS idx_complaints_status ON complaints(status);
+CREATE INDEX IF NOT EXISTS idx_complaints_category ON complaints(category);
+CREATE INDEX IF NOT EXISTS idx_complaints_student ON complaints(student_id);
+CREATE TABLE IF NOT EXISTS complaint_images(id SERIAL PRIMARY KEY, complaint_id INT NOT NULL REFERENCES complaints(id) ON DELETE CASCADE, image_path VARCHAR(200));
+CREATE TABLE IF NOT EXISTS notifications(id SERIAL PRIMARY KEY, student_id INT REFERENCES students(id) ON DELETE CASCADE, for_admin SMALLINT DEFAULT 0, complaint_id INT, message VARCHAR(255), read_status SMALLINT DEFAULT 0, created_at TIMESTAMP DEFAULT NOW());

@@ -1,0 +1,1 @@
+import{j as e}from"./index-CdiR0C0d.js";import{W as t}from"./waving-portfolio-landing-Bzor3FB6.js";function a(){return e.jsx(t,{name:"Kedha",year:"2027",roles:["Motion Designer","Animator"],lettersLeft:["HEL","WOR"],giantLetter:"L",lettersRight:["O","D"],title:"Hello World",signature:"KE/DHA",greeting:"Hello!",accent:"#2346ff",paper:"#f3f1ea"})}export{a as default};

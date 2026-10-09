@@ -1,0 +1,1 @@
+import{j as e}from"./index-CdiR0C0d.js";import{A as s}from"./agent-console-template-BK55z2Bk.js";function n(){return e.jsx(s,{sessions:[],theme:"paper",brand:"Thimble",project:"side-quests",cwd:"~/code/side-quests",storageKey:"agent-console-template-blank"})}export{n as default};

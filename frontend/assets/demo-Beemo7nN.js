@@ -1,0 +1,1 @@
+import{j as r}from"./index-CdiR0C0d.js";import{H as a}from"./hover-expand-gallery-DdPvU8aZ.js";const n={railWidth:64,maxOpenWidth:520,duration:620};function e(i){const t={...n,...i};return r.jsx(a,{railWidth:t.railWidth,maxOpenWidth:t.maxOpenWidth,duration:t.duration})}export{e as default};

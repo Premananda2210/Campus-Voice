@@ -1,0 +1,10 @@
+# Secrets — NEVER commit (Aiven password + JWT secret live here)
+.env
+
+# Dependencies (reinstall with npm ci / npm install)
+node_modules/
+template-src/node_modules/
+
+# Local leftovers
+backup-frontend-*.zip
+*.log

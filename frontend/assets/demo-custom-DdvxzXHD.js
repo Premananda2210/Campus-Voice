@@ -1,0 +1,1 @@
+import{j as t}from"./index-CdiR0C0d.js";import{S as o}from"./spotlight-laser-preloader-4Q6Ht8Yw.js";function a(){return t.jsx(o,{loop:!0,name:"HELLO",durationMs:2600,palette:{laser:"#22ff88",hot:"#eafff2"}})}export{a as default};
