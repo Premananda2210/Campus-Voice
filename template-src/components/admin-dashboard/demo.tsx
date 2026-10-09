@@ -83,6 +83,17 @@ export default function Demo() {
     }
   }
 
+  const withdraw = async (id: string) => {
+    if (!confirm("Withdraw complaint " + id + "? This deletes it permanently.")) return
+    try {
+      await cvApi("/api/admin/complaints/" + id, { method: "DELETE" })
+      setOpenId(null)
+      load()
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Could not withdraw")
+    }
+  }
+
   if (denied)
     return (
       <CvPage narrow kicker="Admin console" title="Hold on.">
@@ -147,6 +158,9 @@ export default function Demo() {
                       {details[r.complaint_id] && (() => { const c = details[r.complaint_id]; return (
                         <div>
                           <div style={{ fontWeight: 800, fontSize: "1.05rem" }}>{c.title}</div>
+                          <div style={{ marginTop: 10 }}>
+                            <button type="button" className="cv-ghost" style={{ padding: "8px 20px" }} onClick={() => withdraw(r.complaint_id)}>Withdraw complaint</button>
+                          </div>
                           <p style={{ margin: "8px 0", whiteSpace: "pre-wrap" }}>{c.description}</p>
                           <div className="cv-mono">
                             Filed by {c.full_name}{c.department && !c.anonymous ? " · " + c.department : ""} · {new Date(c.created_at).toLocaleString()}

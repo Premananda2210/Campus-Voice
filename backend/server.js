@@ -68,6 +68,8 @@ app.put('/api/admin/status/:id',auth('admin'),J(async(req,res)=>{
  await db.execute('UPDATE complaints SET status=?,admin_remark=COALESCE(?,admin_remark),updated_at=NOW() WHERE complaint_id=?',[status,remark||null,req.params.id]);
  const[[c]]=await db.execute('SELECT id,student_id FROM complaints WHERE complaint_id=?',[req.params.id]);
  await notify(c.student_id,c.id,`Complaint ${req.params.id} is now ${status}`);res.json({ok:true});}));
+// ponytail: orphan upload files stay on disk (same as student delete); prune backend/uploads when storage matters
+app.delete('/api/admin/complaints/:id',auth('admin'),J(async(req,res)=>{await db.execute('DELETE FROM complaints WHERE complaint_id=?',[req.params.id]);res.json({ok:true});}));
 app.get('/api/admin/stats',auth('admin'),J(async(req,res)=>{
  const[[s]]=await db.execute(`SELECT COUNT(*)::int total,COALESCE(SUM((status='Pending')::int),0)::int pending,COALESCE(SUM((status='In Review')::int),0)::int review,COALESCE(SUM((status='Resolved')::int),0)::int resolved,
   COALESCE(SUM((priority IN('High','Urgent'))::int),0)::int high,COALESCE(SUM(anonymous),0)::int anon FROM complaints`);res.json(s);}));

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-const CATEGORIES = ["Infrastructure", "Classroom", "Washroom", "Water Facility", "Electricity", "Wi-Fi", "Library", "Faculty", "Hostel", "Canteen", "Cleanliness", "Other"]
+const CATEGORIES = ["Infrastructure", "Classroom", "Washroom", "Water Facility", "Electricity", "Wi-Fi", "Library", "Faculty", "Harassment", "Ragging", "Hostel", "Canteen", "Cleanliness", "Transport", "Parking", "Security", "Sports", "Medical", "Scholarships", "Placements", "IT Support", "Other"]
 
 const CSS = `
 .cf-page{min-height:100svh;background:#060821;color:#f2f4ff;font-family:"Poppins","Montserrat",Archivo,Inter,system-ui,sans-serif;padding:32px 20px 80px;position:relative;overflow-x:hidden}
