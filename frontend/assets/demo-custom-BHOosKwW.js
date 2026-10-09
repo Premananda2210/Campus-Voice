@@ -1,1 +1,0 @@
-import{j as e}from"./index-CdiR0C0d.js";import{I as t}from"./ink-orbit-sculpture-CNjSaWDd.js";function i(){return e.jsx("div",{className:"relative w-full",children:e.jsx(t,{ink:"#2b1d14",background:"#f3ece1",seed:7,autoReforge:7,spin:.1,label:"SPECIMEN · PLATE VII",hint:"Drag to turn · Click for the next specimen"})})}export{i as default};

@@ -1,1 +1,0 @@
-import{j as s}from"./index-CdiR0C0d.js";import{F as m}from"./foundation-primitives-Buxf26s8.js";function o(){return s.jsx("div",{className:"w-full",children:s.jsx("div",{className:"mx-auto max-w-5xl px-4 py-10 sm:px-8 sm:py-16",children:s.jsx(m,{})})})}export{o as default};

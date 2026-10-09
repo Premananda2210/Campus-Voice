@@ -1,1 +1,0 @@
-import{j as r}from"./index-CdiR0C0d.js";import{P as e}from"./perforated-stripe-curtain-DTi1N3yN.js";function i(){return r.jsx("div",{className:"relative w-full",children:r.jsx(e,{})})}export{i as default};

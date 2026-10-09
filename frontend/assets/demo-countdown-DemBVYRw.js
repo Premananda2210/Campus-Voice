@@ -1,1 +1,0 @@
-import{j as e}from"./index-CdiR0C0d.js";import{S as t}from"./slat-count-preloader-m8_PfSbp.js";function s(){return e.jsx(t,{loop:!0,preset:"ink",sequence:["5","4","3","2","1","GO!"],digits:3,pad:!1,slatRatio:2.4,speed:440,stepMs:900,label:"Night Edition — Run 05",caption:"Doors open in five. Sequence frames take numbers and A–Z."})}export{s as default};

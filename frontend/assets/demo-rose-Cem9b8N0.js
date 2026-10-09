@@ -1,2 +1,0 @@
-import{j as t}from"./index-CdiR0C0d.js";import{L as o}from"./lilac-meadow-landing-BXwbMMra.js";function i(){return t.jsx(o,{brand:"Petalpay",tokenName:"Rose Dollar",ticker:"RUSD",palette:"rose",hero:{title:`Savings in
-Full Bloom`,subtitle:"A dollar that quietly earns while you sleep. Spend it like cash, hold it like a garden.",action:{label:"See it grow",href:"#calculator"}},calculator:{apy:4.6,title:"Let it blossom",defaultDeposit:2500},join:{title:"Sow the first seed",action:"Get early access"},onJoin:()=>new Promise(e=>setTimeout(e,900))})}export{i as default};

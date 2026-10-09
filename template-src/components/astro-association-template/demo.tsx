@@ -5,7 +5,7 @@ import AstroAssociationTemplate from "@/components/ui/astro-association-template
 export default function Demo() {
   return (
     <>
-      <style>{`[data-section="nights"]{display:none}.aa-tiers{display:none}[data-section="join"] .aa-meta{display:none}.aa-issue.aa-issue,.aa-issue-big.aa-issue-big{display:none}[data-section="projects"] .aa-stage-body,[data-section="projects"] .aa-proj-head .aa-label{display:none}.aa-foot-end .aa-icon{display:none}.aa-foot-end .aa-toggle{margin-left:auto}`}</style>
+      <style>{`[data-section="nights"]{display:none}[data-section="projects"]{display:none}.aa-tiers{display:none}[data-section="join"] .aa-meta{display:none}.aa-issue.aa-issue,.aa-issue-big.aa-issue-big{display:none}[data-section="projects"] .aa-stage-body,[data-section="projects"] .aa-proj-head .aa-label{display:none}.aa-foot-end .aa-icon{display:none}.aa-foot-end .aa-toggle{margin-left:auto}`}</style>
       <AstroAssociationTemplate
         paletteSwitcher={false}
         brand="Campus Voice"
@@ -13,7 +13,7 @@ export default function Demo() {
         onNavCta={() => { location.hash = "signin" }}
         nav={[
           { label: "My Complaints", target: "mission" },
-          { label: "Complaint Status", target: "projects" },
+          { label: "Complaint Status", target: "#student-dashboard" },
           { label: "Sign In", target: "#signin" },
         ]}
         hero={{

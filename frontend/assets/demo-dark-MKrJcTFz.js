@@ -1,1 +1,0 @@
-import{j as e}from"./index-CdiR0C0d.js";import{A as t}from"./astro-association-template-BXJkXr5A.js";function r(){return e.jsx(t,{defaultTheme:"dark",palette:"nebula",seed:2077})}export{r as default};

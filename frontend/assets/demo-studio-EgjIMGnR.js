@@ -1,1 +1,0 @@
-import{j as o}from"./index-CdiR0C0d.js";import{H as t}from"./holo-sticker-logo-CpFAW6pI.js";const e={name:"Bolt",d:"M57 12 L27 55 H47 L41 88 L73 42 H53 Z"};function s(){return o.jsx(t,{tone:"studio",tint:"#8b6bff",ink:"#1b1030",peel:.38,peelAngle:132,glyphs:["smile",e,"spark","play"],label:"Studio sticker",cycle:4200})}export{s as default};

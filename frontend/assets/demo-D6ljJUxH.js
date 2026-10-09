@@ -1,1 +1,0 @@
-import{j as e}from"./index-CdiR0C0d.js";import{D as r}from"./dither-sweep-navbar-B2aNBbzs.js";function i(){return e.jsx("div",{className:"grid w-full",style:{minHeight:"100svh",alignContent:"center",background:"#f5f5ed"},children:e.jsx(r,{sticky:!1})})}export{i as default};

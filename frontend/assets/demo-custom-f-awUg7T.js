@@ -1,1 +1,0 @@
-import{j as e}from"./index-CdiR0C0d.js";import{T as r}from"./tiger-tear-reveal-a3cpYM4n.js";function s(){return e.jsx("div",{className:"w-full",children:e.jsx(r,{word:"FEARLESS",tagline:"STAY WILD",ink:"#111111",paper:"#f4efe4",eyeColor:"#9fd14a",furColor:"#c8752a"})})}export{s as default};

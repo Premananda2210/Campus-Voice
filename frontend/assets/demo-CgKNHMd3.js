@@ -1,1 +1,0 @@
-import{j as r}from"./index-CdiR0C0d.js";import{B as o}from"./beam-wordmark-footer-C56EZTY4.js";function s(){return r.jsx("div",{className:"w-full bg-[#02040b]",children:r.jsx(o,{})})}export{s as default};

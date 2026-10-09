@@ -1,1 +1,0 @@
-import{j as s}from"./index-CdiR0C0d.js";import{C as a}from"./contribution-skyline-DvT_3BBG.js";function r(){return s.jsx("div",{className:"w-full bg-background px-4 py-10 sm:px-8",children:s.jsx("div",{className:"mx-auto w-full max-w-[980px]",children:s.jsx(a,{endDate:"2017-11-08"})})})}export{r as default};

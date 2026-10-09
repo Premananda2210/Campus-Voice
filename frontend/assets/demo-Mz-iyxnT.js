@@ -1,1 +1,0 @@
-import{j as r}from"./index-CdiR0C0d.js";import{C as o}from"./code-curtain-HifZ1sAC.js";function t(){return r.jsx("div",{className:"relative w-full bg-[var(--color-background)]",children:r.jsx(o,{})})}export{t as default};

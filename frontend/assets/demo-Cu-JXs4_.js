@@ -1,1 +1,0 @@
-import{j as e}from"./index-CdiR0C0d.js";import{H as r}from"./holo-card-D9TEZMtQ.js";function a(){return e.jsx("div",{className:"flex w-full items-center justify-center bg-[#0a0812] px-6 py-20",children:e.jsx(r,{name:"Aurora Drake",subtitle:"Holofoil · Stage 2",number:"No. 001",rarity:"Legendary"})})}export{a as default};

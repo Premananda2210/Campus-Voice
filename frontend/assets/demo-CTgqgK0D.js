@@ -1,1 +1,0 @@
-import{j as t}from"./index-CdiR0C0d.js";import{S as e}from"./sealed-invite-waitlist-DZmwanrG.js";function m(){return t.jsx(e,{variant:"onyx",initialState:"invited",initialEmail:"kedhar@example.com",glow:"#e8b77a",onSubmit:()=>new Promise(i=>setTimeout(()=>i(42),900))})}export{m as default};

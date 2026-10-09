@@ -1,1 +1,0 @@
-import{j as o}from"./index-CdiR0C0d.js";import{B as e}from"./brushstroke-portfolio-hero-B3a7psF1.js";function s(){return o.jsx(e,{role:"3D Artist",period:"2022-2023",periodNote:"Selected works",name:"Kedhareswer Naidu",email:"hello@yourstudio.com",phone:"0925 028 531"})}export{s as default};

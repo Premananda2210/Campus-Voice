@@ -1,1 +1,0 @@
-import{j as o}from"./index-CdiR0C0d.js";import{A as e}from"./amour-sunrise-preloader-Cc_f8JKg.js";function f(){return o.jsx(e,{loop:!0,word:"Ciao!",caption:"fresh out of the oven",weight:.85,fan:1.3,palette:{paper:"#fbefc9",ink:"#d2361f",sun:"#ff7a3d",core:"#c42a12",glow:"#fff4d6"}})}export{f as default};

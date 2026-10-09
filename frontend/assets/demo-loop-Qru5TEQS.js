@@ -1,1 +1,0 @@
-import{j as e}from"./index-CdiR0C0d.js";import{T as o}from"./title-sequence-preloader-ZwR1RKpn.js";function s(){return e.jsx("div",{className:"w-full",children:e.jsx(o,{loop:!0})})}export{s as default};

@@ -1,1 +1,0 @@
-import{j as e}from"./index-CdiR0C0d.js";import{P as o}from"./prism-comet-preloader-CLY7pZDV.js";function a(){return e.jsx(o,{loop:!0,word:"Solstice",caption:"Festival of light · Night one",palette:{background:"#070302",blue:"#b3261e",violet:"#ff6a1a",magenta:"#ffb02e",cyan:"#fff1c2",gold:"#ffd36b"},speed:1.4,grid:!1,durationMs:5200})}export{a as default};
