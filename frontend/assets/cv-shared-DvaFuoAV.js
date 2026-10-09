@@ -1,4 +1,4 @@
-import{j as e}from"./index-CKq6afq8.js";const i=`
+import{j as e}from"./index-BdPkwpSl.js";const i=`
 .cv-page{min-height:100svh;background:#060821;color:#f2f4ff;font-family:"Poppins","Montserrat",Archivo,Inter,system-ui,sans-serif;padding:32px 20px 80px;position:relative;overflow-x:hidden}
 .cv-page::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(700px 420px at 88% -4%,rgba(47,71,255,.3),transparent 60%),radial-gradient(620px 420px at -8% 100%,rgba(31,227,192,.12),transparent 60%)}
 .cv-wrap{max-width:860px;margin:0 auto;position:relative;z-index:1}
