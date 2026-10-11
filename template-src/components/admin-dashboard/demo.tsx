@@ -110,7 +110,7 @@ export default function Demo() {
         {cards.map(([label, n], i) => (
           <div key={label} className="cv-card cv-stat">
             <span className="cv-mono">#0{i + 1}</span>
-            <b className="cv-bubtext">{n}</b>
+            <b>{n}</b>
             {label}
           </div>
         ))}

@@ -100,7 +100,7 @@ export default function Demo() {
         {cards.map(([label, n], i) => (
           <div key={label} className="cv-card cv-stat">
             <span className="cv-mono">#0{i + 1}</span>
-            <b className="cv-bubtext">{n}</b>
+            <b>{n}</b>
             {label}
           </div>
         ))}
@@ -110,7 +110,7 @@ export default function Demo() {
         {list.length === 0 && <div className="cv-card">No complaints yet — file your first one above.</div>}
         {list.map((x) => (
           <div key={x.complaint_id} className="cv-card">
-            <div className="cv-band"><span className="cv-id cv-bubtext">{x.complaint_id}</span></div>
+            <div className="cv-band"><span className="cv-id">{x.complaint_id}</span></div>
             <div style={{ fontWeight: 800, fontSize: "1.05rem" }}>{x.title}</div>
             <div className="cv-top" style={{ margin: "8px 0 0" }}>
               <span className="cv-mono">{x.category} · {x.priority} · {x.status} · {new Date(x.created_at).toLocaleDateString()}</span>
