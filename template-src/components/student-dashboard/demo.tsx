@@ -85,17 +85,15 @@ export default function Demo() {
         {list.length === 0 && <div className="cv-card">No complaints yet — file your first one above.</div>}
         {list.map((x) => (
           <div key={x.complaint_id} className="cv-card">
-            <div className="cv-top" style={{ marginBottom: 8 }}>
-              <span className="cv-mono">{x.complaint_id}</span>
+            <div className="cv-band"><span className="cv-id">{x.complaint_id}</span></div>
+            <div style={{ fontWeight: 800, fontSize: "1.05rem" }}>{x.title}</div>
+            <div className="cv-top" style={{ margin: "8px 0 0" }}>
+              <span className="cv-mono">{x.category} · {x.priority} · {x.status} · {new Date(x.created_at).toLocaleDateString()}</span>
               {x.status === "Pending" && (
                 <button type="button" className="cv-ghost" style={{ padding: "6px 16px" }} onClick={() => withdraw(x.complaint_id)}>
                   Withdraw
                 </button>
               )}
-            </div>
-            <div style={{ fontWeight: 800, fontSize: "1.05rem" }}>{x.title}</div>
-            <div className="cv-mono" style={{ marginTop: 8 }}>
-              {x.category} · {x.priority} · {x.status} · {new Date(x.created_at).toLocaleDateString()}
             </div>
           </div>
         ))}
