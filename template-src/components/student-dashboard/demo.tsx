@@ -50,6 +50,31 @@ export default function Demo() {
     }
   }
 
+  type Detail = {
+    description: string
+    location: string | null
+    incident_date: string | null
+    created_at: string
+    admin_remark: string | null
+    images: { image_path: string }[]
+  }
+  const [openId, setOpenId] = React.useState<string | null>(null)
+  const [details, setDetails] = React.useState<Record<string, Detail>>({})
+
+  const toggle = async (id: string) => {
+    if (openId === id) {
+      setOpenId(null)
+      return
+    }
+    setOpenId(id)
+    if (!details[id]) {
+      try {
+        const c = await cvApi("/api/complaints/" + id)
+        setDetails((d) => ({ ...d, [id]: c as Detail }))
+      } catch {}
+    }
+  }
+
   if (denied)
     return (
       <CvPage narrow kicker="Student console" title="Hold on.">
@@ -89,12 +114,40 @@ export default function Demo() {
             <div style={{ fontWeight: 800, fontSize: "1.05rem" }}>{x.title}</div>
             <div className="cv-top" style={{ margin: "8px 0 0" }}>
               <span className="cv-mono">{x.category} · {x.priority} · {x.status} · {new Date(x.created_at).toLocaleDateString()}</span>
-              {x.status === "Pending" && (
-                <button type="button" className="cv-ghost" style={{ padding: "6px 16px" }} onClick={() => withdraw(x.complaint_id)}>
-                  Withdraw
+              <span style={{ display: "inline-flex", gap: 8 }}>
+                <button type="button" className="cv-ghost" style={{ padding: "6px 16px" }} onClick={() => toggle(x.complaint_id)} aria-expanded={openId === x.complaint_id}>
+                  {openId === x.complaint_id ? "Hide" : "View"}
                 </button>
-              )}
+                {x.status === "Pending" && (
+                  <button type="button" className="cv-ghost" style={{ padding: "6px 16px" }} onClick={() => withdraw(x.complaint_id)}>
+                    Withdraw
+                  </button>
+                )}
+              </span>
             </div>
+            {openId === x.complaint_id && (
+              <div style={{ marginTop: 12, borderTop: "1px solid rgba(140,149,255,.2)", paddingTop: 12 }}>
+                {!details[x.complaint_id] && <span className="cv-mono">Loading…</span>}
+                {details[x.complaint_id] && (() => { const c = details[x.complaint_id]; return (
+                  <div>
+                    <p style={{ margin: "0 0 8px", whiteSpace: "pre-wrap" }}>{c.description}</p>
+                    <div className="cv-mono">
+                      {c.location ?? "—"} · {c.incident_date ? c.incident_date.slice(0, 10) : "no date"} · filed {new Date(c.created_at).toLocaleString()}
+                    </div>
+                    <div style={{ marginTop: 8 }}><b>Admin remark: </b>{c.admin_remark || "—"}</div>
+                    {c.images.length > 0 && (
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+                        {c.images.map((im, i) => (
+                          /\.pdf$/i.test(im.image_path)
+                            ? <a key={i} className="cv-ghost" style={{ padding: "6px 16px" }} href={im.image_path} target="_blank" rel="noreferrer">PDF {i + 1}</a>
+                            : <a key={i} href={im.image_path} target="_blank" rel="noreferrer"><img src={im.image_path} alt="" style={{ width: 110, borderRadius: 10, cursor: "zoom-in" }} /></a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) })()}
+              </div>
+            )}
           </div>
         ))}
       </div>
