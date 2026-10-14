@@ -1588,14 +1588,18 @@ export default function AstroAssociationTemplate({
   const [tier, setTier] = React.useState(featuredTier)
   const [name, setName] = React.useState("")
   const [email, setEmail] = React.useState("")
-  // A signed-in student sees their own card until logout: prefill from the
-  // session profile, cleared automatically when the session is gone.
+  // The member card belongs to a signed-in student: prefill from the session
+  // profile, and hide the whole join block until login is done.
+  const [authed, setAuthed] = React.useState<boolean | null>(null)
   React.useEffect(() => {
-    fetch("/api/auth/profile").then((r) => (r.ok ? r.json() : null)).then((p) => {
+    fetch("/api/auth/profile").then((r) => {
+      setAuthed(r.ok)
+      return r.ok ? r.json() : null
+    }).then((p) => {
       if (!p) return
       setName((v) => v || p.full_name || "")
       setEmail((v) => v || p.student_id || "")
-    }).catch(() => {})
+    }).catch(() => setAuthed(false))
   }, [])
   const [status, setStatus] = React.useState("idle" as Status)
   const [msg, setMsg] = React.useState("")
@@ -2088,6 +2092,22 @@ export default function AstroAssociationTemplate({
         {/* ----------------------------------------------------------- join */}
         <section className="aa-sec aa-pad" ref={setSection("join")} data-section="join" style={{ paddingTop: 0 }}>
           <div className="aa-in aa-reveal" ref={joinRef as React.Ref<HTMLDivElement>} data-in={joinIn}>
+            {authed === false ? (
+              <div>
+                <h2 className="aa-h2" style={{ marginTop: "clamp(18px,3cqi,30px)" }}>
+                  Members only.
+                </h2>
+                <p className="aa-lede" style={{ margin: "16px 0 22px" }}>
+                  Sign in and your card fills itself in.
+                </p>
+                <p>
+                  <a className="aa-btn aa-btn-solid" href="#signin">
+                    Sign in →
+                  </a>
+                </p>
+              </div>
+            ) : authed === true ? (
+              <>
             <div className="aa-meta">
               <span className="aa-label">{J.tag}</span>
               <span className="aa-label">Member {number}</span>
@@ -2222,6 +2242,8 @@ export default function AstroAssociationTemplate({
                 </span>
               </div>
             </div>
+              </>
+            ) : null}
           </div>
         </section>
 
