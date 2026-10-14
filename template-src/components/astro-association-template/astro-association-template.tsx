@@ -1591,16 +1591,37 @@ export default function AstroAssociationTemplate({
   // The member card belongs to a signed-in student: prefill from the session
   // profile, and hide the whole join block until login is done.
   const [authed, setAuthed] = React.useState<boolean | null>(null)
+  const [session, setSession] = React.useState<null | "student" | "admin">(null)
   React.useEffect(() => {
     fetch("/api/auth/profile").then((r) => {
-      setAuthed(r.ok)
-      return r.ok ? r.json() : null
+      if (r.ok) {
+        setAuthed(true)
+        setSession("student")
+        return r.json()
+      }
+      return fetch("/api/admin/stats").then((s) => {
+        setAuthed(false)
+        setSession(s.ok ? "admin" : null)
+        return null
+      })
     }).then((p) => {
       if (!p) return
       setName((v) => v || p.full_name || "")
       setEmail((v) => v || p.student_id || "")
-    }).catch(() => setAuthed(false))
+    }).catch(() => {
+      setAuthed(false)
+      setSession(null)
+    })
   }, [])
+  const logout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" })
+    } catch {}
+    setSession(null)
+    setAuthed(false)
+    setName("")
+    setEmail("")
+  }
   const [status, setStatus] = React.useState("idle" as Status)
   const [msg, setMsg] = React.useState("")
   const [printed, setPrinted] = React.useState(0)
@@ -1722,10 +1743,17 @@ export default function AstroAssociationTemplate({
               <button type="button" className="aa-icon" onClick={toggleTheme} aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}>
                 <ThemeIcon dark={theme === "dark"} />
               </button>
-              <button type="button" className="aa-btn aa-btn-solid" onClick={navCtaClick}>
-                {navCta}
-                <Arrow size={12} />
-              </button>
+              {session ? (
+                <button type="button" className="aa-btn aa-btn-solid" onClick={logout}>
+                  Log out
+                  <Arrow size={12} />
+                </button>
+              ) : (
+                <button type="button" className="aa-btn aa-btn-solid" onClick={navCtaClick}>
+                  {navCta}
+                  <Arrow size={12} />
+                </button>
+              )}
               <button type="button" className="aa-icon aa-menu-btn" aria-expanded={menu} aria-label="Menu" onClick={() => setMenu((m) => !m)}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                   {menu ? <path d="M3.5 3.5l9 9M12.5 3.5l-9 9" /> : <path d="M2.5 5h11M2.5 11h11" />}
