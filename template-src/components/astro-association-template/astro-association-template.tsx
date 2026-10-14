@@ -1424,6 +1424,19 @@ export default function AstroAssociationTemplate({
   const reduced = useReducedMotion()
   const H = { ...D_HERO, ...hero }
   const M = { ...D_MISSION, ...mission }
+  // Live mission counters from the database (public counts only); prop stats stay as fallback.
+  const [liveStats, setLiveStats] = React.useState<{ filed: number; completed: number } | null>(null)
+  React.useEffect(() => {
+    fetch("/api/public/stats").then((r) => (r.ok ? r.json() : null)).then((s) => {
+      if (s && typeof s.filed === "number") setLiveStats(s)
+    }).catch(() => {})
+  }, [])
+  const stats = liveStats
+    ? [
+        { value: liveStats.filed.toLocaleString("en-US"), label: "Complaints Filed" },
+        { value: liveStats.completed.toLocaleString("en-US"), label: "Completed" },
+      ]
+    : M.stats
   const PC = { ...D_PROJECTS_COPY, ...projectsCopy }
   const J = { ...D_JOIN, ...join }
   const F = { ...D_FOOTER, ...footer }
@@ -1856,7 +1869,7 @@ export default function AstroAssociationTemplate({
                 <p className="aa-lede">{M.body}</p>
               </div>
               <dl className="aa-stats">
-                {M.stats.map((s, i) => (
+                {stats.map((s, i) => (
                   <div className="aa-stat" key={i}>
                     <dt>
                       <StatValue value={s.value} run={missionIn} reduced={reduced} />

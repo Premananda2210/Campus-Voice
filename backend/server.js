@@ -85,6 +85,9 @@ app.get('/api/notifications',auth(),J(async(req,res)=>{
 app.put('/api/notifications/read',auth(),J(async(req,res)=>{
  req.user.role==='admin'?await db.execute('UPDATE notifications SET read_status=1 WHERE for_admin=1'):await db.execute('UPDATE notifications SET read_status=1 WHERE student_id=?',[req.user.id]);res.json({ok:true});}));
 // Reports (admin analytics)
+// Public counters for the landing page (no personal data).
+app.get('/api/public/stats',J(async(req,res)=>{
+ const[[s]]=await db.execute(`SELECT COUNT(*)::int filed,COALESCE(SUM((status='Resolved')::int),0)::int completed FROM complaints`);res.json(s);}));
 app.get('/api/admin/reports',auth('admin'),J(async(req,res)=>{
  const q=async sql=>(await db.execute(sql))[0];
  res.json({category:await q('SELECT category k,COUNT(*)::int n FROM complaints GROUP BY category'),

@@ -8,3 +8,5 @@ template-src/node_modules/
 # Local leftovers
 backup-frontend-*.zip
 *.log
+
+.vercel
