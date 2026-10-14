@@ -1588,6 +1588,15 @@ export default function AstroAssociationTemplate({
   const [tier, setTier] = React.useState(featuredTier)
   const [name, setName] = React.useState("")
   const [email, setEmail] = React.useState("")
+  // A signed-in student sees their own card until logout: prefill from the
+  // session profile, cleared automatically when the session is gone.
+  React.useEffect(() => {
+    fetch("/api/auth/profile").then((r) => (r.ok ? r.json() : null)).then((p) => {
+      if (!p) return
+      setName((v) => v || p.full_name || "")
+      setEmail((v) => v || p.student_id || "")
+    }).catch(() => {})
+  }, [])
   const [status, setStatus] = React.useState("idle" as Status)
   const [msg, setMsg] = React.useState("")
   const [printed, setPrinted] = React.useState(0)
@@ -2202,7 +2211,7 @@ export default function AstroAssociationTemplate({
                       </div>
                       <div className="aa-member-no">
                         <small>Roll No.</small>
-                        {number}
+                        {email.trim() || number}
                       </div>
                     </div>
                   </div>
