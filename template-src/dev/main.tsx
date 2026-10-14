@@ -47,7 +47,8 @@ const components = [...new Set(demos.map((d) => d.slug))]
 // workshop must never do, so the demo and the theme come off the URL instead.
 // No hash, or one that names no demo, is the index of every component.
 const find = (hash: string) => demos.find((d) => d.id === decodeURIComponent(hash.slice(1))) ?? null
-const pick = () => find(location.hash)
+// No hash opens our landing page, not the workshop index.
+const pick = () => find(location.hash) ?? demos.find((d) => d.id === "astro-association-template") ?? null
 
 function Workshop() {
   const [current, setCurrent] = React.useState(pick)
