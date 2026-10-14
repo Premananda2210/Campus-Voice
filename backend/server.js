@@ -9,7 +9,8 @@ app.use(cors(),express.json(),cookie());
 app.use('/uploads',express.static(path.join(__dirname,'uploads')));
 app.use(express.static(path.join(__dirname,'../frontend'),{setHeaders:(res,p)=>{if(p.endsWith('index.html'))res.setHeader('Cache-Control','no-store')}}));
 // Upload: JPG/PNG/PDF only, max 5 files, 5MB each
-const upload=multer({storage:multer.diskStorage({destination:path.join(__dirname,'uploads'),
+// ponytail: serverless disks are ephemeral — on Vercel use /tmp so filing works, but files vanish between deploys; use real storage when evidence must persist
+const upload=multer({storage:multer.diskStorage({destination:process.env.VERCEL?require('os').tmpdir():path.join(__dirname,'uploads'),
  filename:(r,f,cb)=>cb(null,Date.now()+'-'+Math.round(Math.random()*1e6)+path.extname(f.originalname).toLowerCase())}),
  limits:{fileSize:5*1024*1024,files:5},
  fileFilter:(r,f,cb)=>cb(null,['image/jpeg','image/png','application/pdf'].includes(f.mimetype))});
@@ -94,4 +95,5 @@ app.get('/api/admin/reports',auth('admin'),J(async(req,res)=>{
 // CLI: node backend/server.js --seed-admin email password
 const i=process.argv.indexOf('--seed-admin');
 if(i>0){(async()=>{await db.execute('INSERT INTO admins(email,password_hash) VALUES(?,?)',[process.argv[i+1],await bcrypt.hash(process.argv[i+2],10)]);console.log('Admin created');process.exit();})();}
-else app.listen(process.env.PORT||3000,()=>console.log('Campus Voice on http://localhost:'+(process.env.PORT||3000)));
+else if(require.main===module)app.listen(process.env.PORT||3000,()=>console.log('Campus Voice on http://localhost:'+(process.env.PORT||3000)));
+module.exports=app;
