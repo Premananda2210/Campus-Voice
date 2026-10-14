@@ -1,6 +1,9 @@
 # Secrets — NEVER commit (Aiven password + JWT secret live here)
 .env
 
+# Runtime uploads (real user evidence — never commit)
+backend/uploads/
+
 # Dependencies (reinstall with npm ci / npm install)
 node_modules/
 template-src/node_modules/

@@ -25,16 +25,9 @@ const CSS = `
 .cf-btn{border:0;border-radius:999px;padding:13px 30px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.85rem;color:#060821;cursor:pointer;background:#8c95ff;box-shadow:0 10px 24px -14px #8c95ff;justify-self:start;font-family:inherit}
 .cf-msg{margin:6px 0 0;font-size:.95rem}
 .cf-msg.ok{color:#41ef96}.cf-msg.err{color:#fda4af}
-.cf-list{margin-top:30px;display:grid;gap:12px}
-.cf-card{border:1px solid rgba(140,149,255,.28);border-radius:20px;padding:16px 20px;background:rgba(12,16,51,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
-.cf-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.cf-card-top button{background:none;border:0;color:#8c95ff;cursor:pointer;text-decoration:underline;font-size:.8rem;font-family:inherit}
-.cf-title{font-weight:700;margin-top:6px}
 .cf-back{display:inline-block;color:#f2f4ff;text-decoration:none;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
 .cf-thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.cf-thumbs img{width:64px;height:64px;object-fit:cover;border-radius:12px;cursor:pointer;border:1px solid rgba(140,149,255,.3)}
-.cf-ev{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.cf-ev img{width:52px;height:52px;object-fit:cover;border-radius:10px;cursor:zoom-in}
+.cf-thumbs img,.cf-thumbs video{width:64px;height:64px;object-fit:cover;border-radius:12px;cursor:pointer;border:1px solid rgba(140,149,255,.3)}
 .cf-ghost{border:1.5px solid #8c95ff;background:transparent;color:#8c95ff;border-radius:999px;padding:11px 24px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem;cursor:pointer;font-family:inherit}
 .cf-cam{position:fixed;inset:0;z-index:50;background:rgba(4,4,20,.92);display:grid;place-items:center;padding:20px;box-sizing:border-box}
 .cf-cam-box{width:min(560px,94vw);background:#0c1033;border:1px solid rgba(140,149,255,.3);border-radius:20px;padding:18px;box-sizing:border-box}
