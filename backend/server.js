@@ -50,7 +50,16 @@ app.get('/api/complaints/:id',auth(),J(async(req,res)=>{
  const[[c]]=await db.execute('SELECT c.*,s.full_name,s.department FROM complaints c JOIN students s ON s.id=c.student_id WHERE c.complaint_id=?',[req.params.id]);
  if(!c||(req.user.role==='student'&&c.student_id!==req.user.id))return res.status(404).json({error:'Not found'});
  if(req.user.role==='admin'&&c.anonymous){c.full_name='Anonymous';c.student_id=null;}
- const[imgs]=await db.execute('SELECT image_path FROM complaint_images WHERE complaint_id=?',[c.id]);res.json({...c,images:imgs});}));
+ const[imgs]=await db.execute('SELECT image_path FROM complaint_images WHERE complaint_id=?',[c.id]);
+ const[replies]=await db.execute('SELECT id,message,file_data,file_name,created_at FROM admin_replies WHERE complaint_id=? ORDER BY id',[c.id]);res.json({...c,images:imgs,replies});}));
+app.post('/api/admin/replies/:id',auth('admin'),upload.single('file'),
+ [body('message').trim().notEmpty()],valid,J(async(req,res)=>{
+ const[[c]]=await db.execute('SELECT id FROM complaints WHERE complaint_id=?',[req.params.id]);
+ if(!c)return res.status(404).json({error:'Not found'});
+ const f=req.file;
+ await db.execute('INSERT INTO admin_replies(complaint_id,message,file_data,file_name) VALUES(?,?,?,?)',
+  [c.id,req.body.message.trim(),f?('data:'+f.mimetype+';base64,'+f.buffer.toString('base64')):null,f?f.originalname.slice(0,200):null]);
+ res.json({ok:true});}));
 app.delete('/api/complaints/:id',auth('student'),J(async(req,res)=>{
  await db.execute("DELETE FROM complaints WHERE complaint_id=? AND student_id=? AND status='Pending'",[req.params.id,req.user.id]);res.json({ok:true});}));
 // Admin

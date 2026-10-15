@@ -6,4 +6,5 @@ CREATE INDEX IF NOT EXISTS idx_complaints_status ON complaints(status);
 CREATE INDEX IF NOT EXISTS idx_complaints_category ON complaints(category);
 CREATE INDEX IF NOT EXISTS idx_complaints_student ON complaints(student_id);
 CREATE TABLE IF NOT EXISTS complaint_images(id SERIAL PRIMARY KEY, complaint_id INT NOT NULL REFERENCES complaints(id) ON DELETE CASCADE, image_path TEXT);
+CREATE TABLE IF NOT EXISTS admin_replies(id SERIAL PRIMARY KEY, complaint_id INT NOT NULL REFERENCES complaints(id) ON DELETE CASCADE, message TEXT NOT NULL, file_data TEXT, file_name VARCHAR(200), created_at TIMESTAMP DEFAULT NOW());
 CREATE TABLE IF NOT EXISTS notifications(id SERIAL PRIMARY KEY, student_id INT REFERENCES students(id) ON DELETE CASCADE, for_admin SMALLINT DEFAULT 0, complaint_id INT, message VARCHAR(255), read_status SMALLINT DEFAULT 0, created_at TIMESTAMP DEFAULT NOW());

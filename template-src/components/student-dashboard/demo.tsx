@@ -57,6 +57,7 @@ export default function Demo() {
     created_at: string
     admin_remark: string | null
     images: { image_path: string }[]
+    replies: { id: number; message: string; file_data: string | null; file_name: string | null; created_at: string }[]
   }
   const [openId, setOpenId] = React.useState<string | null>(null)
   const [details, setDetails] = React.useState<Record<string, Detail>>({})
@@ -135,6 +136,24 @@ export default function Demo() {
                       {c.location ?? "—"} · {c.incident_date ? c.incident_date.slice(0, 10) : "no date"} · filed {new Date(c.created_at).toLocaleString()}
                     </div>
                     <div style={{ marginTop: 8 }}><b>Admin remark: </b>{c.admin_remark || "—"}</div>
+                    {c.replies.length > 0 && (
+                      <div style={{ marginTop: 8 }}>
+                        <div className="cv-mono" style={{ marginBottom: 4 }}>Replies from admin ({c.replies.length})</div>
+                        {c.replies.map((rp) => (
+                          <div key={rp.id} style={{ borderTop: "1px solid rgba(140,149,255,.2)", padding: "8px 0" }}>
+                            <p style={{ margin: "0 0 4px", whiteSpace: "pre-wrap" }}>{rp.message}</p>
+                            <div className="cv-mono">{new Date(rp.created_at).toLocaleString()}</div>
+                            {rp.file_data && (
+                              /\.pdf$/i.test(rp.file_name || "") ? (
+                                <a className="cv-ghost" style={{ padding: "6px 16px", marginTop: 6, display: "inline-block" }} href={rp.file_data} download={rp.file_name || undefined} target="_blank" rel="noreferrer">{rp.file_name || "Attachment"}</a>
+                              ) : (
+                                <a href={rp.file_data} target="_blank" rel="noreferrer"><img src={rp.file_data} alt="" style={{ width: 110, borderRadius: 10, cursor: "zoom-in", marginTop: 6 }} /></a>
+                              )
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     {c.images.length > 0 && (
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
                         {c.images.map((im, i) => (

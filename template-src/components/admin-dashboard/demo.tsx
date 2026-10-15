@@ -29,6 +29,45 @@ type Detail = {
   created_at: string
   admin_remark: string | null
   images: { image_path: string }[]
+  replies: { id: number; message: string; file_data: string | null; file_name: string | null; created_at: string }[]
+}
+
+function ReplyBox({ id, onSent }: { id: string; onSent: () => void }) {
+  const [text, setText] = React.useState("")
+  const [busy, setBusy] = React.useState(false)
+  const [err, setErr] = React.useState("")
+  const input = React.useRef<HTMLInputElement | null>(null)
+  const send = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!text.trim()) return
+    setBusy(true)
+    setErr("")
+    try {
+      const d = new FormData()
+      d.append("message", text.trim())
+      if (input.current?.files?.[0]) d.append("file", input.current.files[0])
+      const r = await fetch("/api/admin/replies/" + id, { method: "POST", body: d })
+      const j = await r.json().catch(() => ({}))
+      if (!r.ok) throw new Error((j as { error?: string }).error || "Send failed")
+      setText("")
+      if (input.current) input.current.value = ""
+      onSent()
+    } catch (e2) {
+      setErr(e2 instanceof Error ? e2.message : "Send failed")
+    } finally {
+      setBusy(false)
+    }
+  }
+  return (
+    <form onSubmit={send} style={{ display: "grid", gap: 8, marginTop: 10 }}>
+      <textarea className="cv-input" value={text} onChange={(e) => setText(e.target.value)} rows={2} placeholder="Write a reply…" style={{ minHeight: 70, borderRadius: 18 }} />
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+        <input ref={input} type="file" accept=".jpg,.jpeg,.png,.pdf" className="cv-input" style={{ width: "auto", padding: "8px 14px" }} aria-label="Attach a file" />
+        <button type="submit" className="cv-btn" style={{ padding: "10px 24px" }} disabled={busy}>{busy ? "Sending…" : "Reply"}</button>
+      </div>
+      {err && <span className="cv-msg err">{err}</span>}
+    </form>
+  )
 }
 
 export default function Demo() {
@@ -39,18 +78,20 @@ export default function Demo() {
   const [openId, setOpenId] = React.useState<string | null>(null)
   const [details, setDetails] = React.useState<Record<string, Detail>>({})
 
+  const fetchDetail = async (id: string) => {
+    try {
+      const c = await cvApi("/api/complaints/" + id)
+      setDetails((d) => ({ ...d, [id]: c as Detail }))
+    } catch {}
+  }
+
   const toggle = async (id: string) => {
     if (openId === id) {
       setOpenId(null)
       return
     }
     setOpenId(id)
-    if (!details[id]) {
-      try {
-        const c = await cvApi("/api/complaints/" + id)
-        setDetails((d) => ({ ...d, [id]: c as Detail }))
-      } catch {}
-    }
+    if (!details[id]) await fetchDetail(id)
   }
 
   const load = React.useCallback(async () => {
@@ -155,6 +196,23 @@ export default function Demo() {
                             {c.category} · {c.location ?? "—"} · {c.incident_date ? c.incident_date.slice(0, 10) : "no date"} · {c.anonymous ? "anonymous" : "named"}
                           </div>
                           <div style={{ marginTop: 8 }}><b>Admin remark: </b>{c.admin_remark || "—"}</div>
+                          <div style={{ marginTop: 12 }}>
+                            <div className="cv-mono" style={{ marginBottom: 8 }}>Replies ({c.replies.length})</div>
+                            {c.replies.map((rp) => (
+                              <div key={rp.id} style={{ borderTop: "1px solid rgba(140,149,255,.2)", padding: "8px 0" }}>
+                                <p style={{ margin: "0 0 4px", whiteSpace: "pre-wrap" }}>{rp.message}</p>
+                                <div className="cv-mono">{new Date(rp.created_at).toLocaleString()}</div>
+                                {rp.file_data && (
+                                  /\.pdf$/i.test(rp.file_name || "") ? (
+                                    <a className="cv-ghost" style={{ padding: "6px 16px", marginTop: 6, display: "inline-block" }} href={rp.file_data} download={rp.file_name || undefined} target="_blank" rel="noreferrer">{rp.file_name || "Attachment"}</a>
+                                  ) : (
+                                    <a href={rp.file_data} target="_blank" rel="noreferrer"><img src={rp.file_data} alt="" style={{ width: 110, borderRadius: 10, cursor: "zoom-in", marginTop: 6 }} /></a>
+                                  )
+                                )}
+                              </div>
+                            ))}
+                            <ReplyBox id={r.complaint_id} onSent={() => fetchDetail(r.complaint_id)} />
+                          </div>
                           {c.images.length > 0 && (
                             <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
                               {c.images.map((x, i) => (
