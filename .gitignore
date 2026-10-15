@@ -13,3 +13,4 @@ backup-frontend-*.zip
 *.log
 
 .vercel
+.env*

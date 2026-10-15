@@ -8,10 +8,9 @@ const db={execute:async(sql,p=[])=>{let i=0;const r=await pool.query(sql.replace
 app.use(cors(),express.json(),cookie());
 app.use('/uploads',express.static(path.join(__dirname,'uploads')));
 app.use(express.static(path.join(__dirname,'../frontend'),{setHeaders:(res,p)=>{if(p.endsWith('index.html'))res.setHeader('Cache-Control','no-store')}}));
-// Upload: JPG/PNG/PDF only, max 5 files, 5MB each
-// ponytail: serverless disks are ephemeral — on Vercel use /tmp so filing works, but files vanish between deploys; use real storage when evidence must persist
-const upload=multer({storage:multer.diskStorage({destination:process.env.VERCEL?require('os').tmpdir():path.join(__dirname,'uploads'),
- filename:(r,f,cb)=>cb(null,Date.now()+'-'+Math.round(Math.random()*1e6)+path.extname(f.originalname).toLowerCase())}),
+// Upload: JPG/PNG/PDF only, max 5 files, 5MB each.
+// ponytail: files stored as data URLs in complaint_images.image_path so evidence survives serverless disks; move to object storage past toy scale
+const upload=multer({storage:multer.memoryStorage(),
  limits:{fileSize:5*1024*1024,files:5},
  fileFilter:(r,f,cb)=>cb(null,['image/jpeg','image/png','application/pdf'].includes(f.mimetype))});
 // Auth middleware (role optional)
@@ -43,7 +42,7 @@ app.post('/api/complaints',auth('student'),upload.array('files',5),
   [req.user.id,b.title,b.description,b.category,b.priority||'Medium',b.location,b.incident_date||null,b.anonymous==='true'?1:0]);
  const cid='CV'+new Date().getFullYear()+String(r[0].id).padStart(4,'0');
  await db.execute('UPDATE complaints SET complaint_id=? WHERE id=?',[cid,r[0].id]);
- for(const f of req.files||[])await db.execute('INSERT INTO complaint_images(complaint_id,image_path) VALUES(?,?)',[r[0].id,'/uploads/'+f.filename]);
+ for(const f of req.files||[])await db.execute('INSERT INTO complaint_images(complaint_id,image_path) VALUES(?,?)',[r[0].id,'data:'+f.mimetype+';base64,'+f.buffer.toString('base64')]);
  res.json({complaint_id:cid});}));
 app.get('/api/complaints',auth('student'),J(async(req,res)=>{
  const[rows]=await db.execute('SELECT * FROM complaints WHERE student_id=? ORDER BY created_at DESC',[req.user.id]);res.json(rows);}));
