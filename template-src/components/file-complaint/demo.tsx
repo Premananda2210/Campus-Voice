@@ -18,6 +18,7 @@ const CSS = `
 .cf-field{display:grid;gap:6px}
 .cf-input{padding:13px 18px;border-radius:16px;border:1px solid rgba(140,149,255,.36);background:rgba(140,149,255,.07);color:#f2f4ff;font-size:1rem;width:100%;box-sizing:border-box;font-family:inherit}
 .cf-input:focus{outline:2px solid #8c95ff}
+select.cf-input option{background:#0c1033;color:#f2f4ff}
 .cf-row{display:grid;gap:14px;grid-template-columns:1fr 1fr}
 @media(max-width:560px){.cf-row{grid-template-columns:1fr}}
 .cf-check{display:flex;align-items:center;gap:10px;font-size:.95rem}
